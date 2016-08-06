@@ -51,7 +51,7 @@ public class Options implements Cloneable, OptionProvider {
     private static String defaultItalicFont;
     // reused often, especially in UmlGraphDoc, worth creating just once and reusing
     private static final Pattern allPattern = Pattern.compile(".*");
-    protected static final String DEFAULT_EXTERNAL_APIDOC = "http://java.sun.com/j2se/1.4.2/docs/api/";
+    protected static final String DEFAULT_EXTERNAL_APIDOC = "http://docs.oracle.com/javase/7/docs/api/";
     
     static {
 	// use an appropriate font depending on the current operating system
@@ -189,7 +189,8 @@ public class Options implements Cloneable, OptionProvider {
     dotExecutable = "dot";
     }
 
-    public Object clone() {
+    @Override
+	public Object clone() {
 	Options clone = null;
 	try {
 	     clone = (Options) super.clone();
@@ -556,7 +557,7 @@ public class Options implements Cloneable, OptionProvider {
 	try {
 	    URL url = new URL(packageListUrl + "/package-list");
 	    br = new BufferedReader(new InputStreamReader(url.openStream()));
-	    String line = null;
+	    String line;
 	    while((line = br.readLine()) != null) {
 		line = line + ".";
 		Pattern pattern = Pattern.compile(line.replace(".", "\\.") + "[^\\.]*");
@@ -586,7 +587,7 @@ public class Options implements Cloneable, OptionProvider {
 	try {
 	    URL url = new URL(packageListUrl + "/package-list");
 	    br = new BufferedReader(new InputStreamReader(url.openStream()));
-	    String line = null;
+	    String line;
 	    while((line = br.readLine()) != null) {
 		line = line + ".";
 		Pattern pattern = Pattern.compile(line.replace(".", "\\.") + "[^\\.]*");
@@ -764,7 +765,7 @@ public class Options implements Cloneable, OptionProvider {
     }
     
     public String toString() {
-	StringBuffer sb = new StringBuffer();
+	StringBuilder sb = new StringBuilder();
 	sb.append("UMLGRAPH OPTIONS\n");
 	for(Field f : this.getClass().getDeclaredFields()) {
 	    if(!Modifier.isStatic(f.getModifiers())) {
